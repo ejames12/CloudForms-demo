@@ -1,21 +1,29 @@
 ---
 - hosts: localhost
 
-# This can be executed as a single role, with the following vars
+#
+# Configure to match your environment
+#
   vars:
-    auth:
+    nuage_auth:
       api_username: csproot
       api_password: csproot
       api_enterprise: csp
       api_url: https://10.0.0.2:8443
       api_version: v5_0
-    enterprise_name: Ansible-Enterprise
-    enterprise_new_name: Ansible-Updated-Enterprise
+    enterprise_name: Ansible-Test
+    enterprise_new_name: Ansible-Updated-Test
+    enterprise_admin_username: ansible-admin
+    enterprise_admin_password: ansible
+    enterprise_admin_new_password: ansible_new
+    enterprise_admin_first_name: Ansible
+    enterprise_admin_last_name: Admin
+    enterprise_admin_email: ansible@localhost.local
 
-
-# Creating a new enterprise
+  tasks:
+  # Creating a new enterprise
   - name: Create Enterprise
-    connection: local
+    delegate_to: localhost
     nuage_vspk:
       auth: "{{ nuage_auth }}"
       type: Enterprise
