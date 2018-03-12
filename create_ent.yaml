@@ -2,24 +2,24 @@
 - hosts: localhost
 
 # This can be executed as a single role, with the following vars
- vars:
-   auth:
-     api_username: csproot
-     api_password: csproot
-     api_enterprise: csp
-     api_url: https://10.0.0.2:8443
-     api_version: v5_0
-   enterprise_name: Ansible-Enterprise
-   enterprise_new_name: Ansible-Updated-Enterprise
+  vars:
+    auth:
+      api_username: csproot
+      api_password: csproot
+      api_enterprise: csp
+      api_url: https://10.0.0.2:8443
+      api_version: v5_0
+    enterprise_name: Ansible-Enterprise
+    enterprise_new_name: Ansible-Updated-Enterprise
 
 
 # Creating a new enterprise
-- name: Create Enterprise
-  connection: local
-  nuage_vspk:
-    auth: "{{ nuage_auth }}"
-    type: Enterprise
-    state: present
-    properties:
-      name: "{{ enterprise_name }}-basic"
-  register: nuage_enterprise
+  - name: Create Enterprise
+    connection: local
+    nuage_vspk:
+      auth: "{{ nuage_auth }}"
+      type: Enterprise
+      state: present
+      properties:
+        name: "{{ enterprise_name }}-basic"
+    register: nuage_enterprise
