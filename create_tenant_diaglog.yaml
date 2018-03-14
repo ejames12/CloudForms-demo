@@ -1,0 +1,58 @@
+---
+- description: 
+  buttons: submit,cancel
+  label: Nuage | Onboart new tenant
+  blueprint_id: 
+  dialog_tabs:
+  - description: 
+    display: edit
+    label: Basic Information
+    display_method: 
+    display_method_options: 
+    position: 0
+    dialog_groups:
+    - description: 
+      display: edit
+      label: Variables
+      display_method: 
+      display_method_options: 
+      position: 0
+      dialog_fields:
+      - name: Tenant Name
+        description: ''
+        data_type: string
+        notes: 
+        notes_display: 
+        display: edit
+        display_method: 
+        display_method_options: {}
+        required: true
+        required_method: 
+        required_method_options: {}
+        default_value: ''
+        values: 
+        values_method: 
+        values_method_options: {}
+        options:
+          :protected: false
+        label: Tenant Name
+        position: 0
+        validator_type: 
+        validator_rule: 
+        reconfigurable: true
+        dynamic: 
+        show_refresh_button: 
+        load_values_on_init: 
+        read_only: false
+        auto_refresh: 
+        trigger_auto_refresh: 
+        visible: true
+        type: DialogFieldTextBox
+        resource_action:
+          action: 
+          resource_type: DialogField
+          ae_namespace: 
+          ae_class: 
+          ae_instance: 
+          ae_message: 
+          ae_attributes: {}
