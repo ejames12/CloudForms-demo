@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: all
 
 #
 # Configure to match your environment
@@ -29,6 +29,7 @@
 
   # Creating a new Domain (if it doesn't exist yet)
   - name: Creating a few Domains from the DomainTemplate
+    hosts: localhost
     delegate_to: localhost
     nuage_vspk:
       auth: "{{ nuage_auth }}"
