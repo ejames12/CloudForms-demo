@@ -1,7 +1,5 @@
 ---
-- hosts: 
-   localhost: 127.0.0.1
-   controller: 10.0.0.4
+- hosts: localhost
 
 #
 # Configure to match your environment
