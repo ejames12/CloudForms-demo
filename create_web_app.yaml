@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+
+#
+# Configure to match your environment
+#
+  vars:
+    nuage_auth:
+      api_username: csproot
+      api_password: csproot
+      api_enterprise: csp
+      api_url: https://10.0.0.2:8443
+      api_version: v5_0
+    enterprise_name: Company XYZ
+    enterprise_admin_username: ansible-admin
+    nuage_dom_temp:
+      id: 65dc31cb-163f-4cab-af60-0f6b8bbd14bb
+
+  tasks:
+  # Creating a new Domain (if it doesn't exist yet)
+  - name: Creating a few Domains from the DomainTemplate
+    delegate_to: localhost
+    nuage_vspk:
+      auth: "{{ nuage_auth }}"
+      type: Domain
+      parent_id: "{{ nuage_enterprise.id }}"
+      parent_type: Enterprise
+      state: present
+      match_filter: "name == '{{ item }}'"
+      properties:
+        name: "{{ item }}"
+        description: "Created by Ansible"
+        template_id: "{{ nuage_dom_temp.id }}"
+    with_items: 
+      - "Web Application AAA"
