@@ -101,3 +101,55 @@
   -  name: Create Openstack VSD-Managed Web Subnet
      command: neutron subnet-create Web_Network 192.168.1.0/24 --name Web_Subnet --nuagenet {{ nuage_web_subnet.id }} --net-partition "Company XYZ" --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
      ignore_errors: yes
+
+
+  - name: Create a new App VM
+    os_server:
+         state: present
+         auth:
+           auth_url: http://10.0.0.4:5000/v3
+           username: admin
+           password: password
+           project_name: admin
+           user-domain-name: Default
+           project-domain-name: Default
+         name: App-VM1
+         image: 62abd37f-ad08-4121-83c4-d771db181d3e
+         timeout: 200
+         flavor: f4a25ee2-4fb0-4f1b-958b-950daf7ee675
+         network: App_Network
+         auto_ip: no
+
+  - name: Create a new Web VM
+    os_server:
+         state: present
+         auth:
+           auth_url: http://10.0.0.4:5000/v3
+           username: admin
+           password: password
+           project_name: admin
+           user-domain-name: Default
+           project-domain-name: Default
+         name: Web-VM1
+         image: 62abd37f-ad08-4121-83c4-d771db181d3e
+         timeout: 200
+         flavor: f4a25ee2-4fb0-4f1b-958b-950daf7ee675
+         network: Web_Network
+         auto_ip: no
+
+  - name: Create a new DB VM
+    os_server:
+         state: present
+         auth:
+           auth_url: http://10.0.0.4:5000/v3
+           username: admin
+           password: password
+           project_name: admin
+           user-domain-name: Default
+           project-domain-name: Default
+         name: DB-VM1
+         image: 62abd37f-ad08-4121-83c4-d771db181d3e
+         timeout: 200
+         flavor: f4a25ee2-4fb0-4f1b-958b-950daf7ee675
+         network: DB_Network
+         auto_ip: no
