@@ -1,10 +1,11 @@
 ---
-- hosts: hosts.yaml
+- hosts: all
 
 #
 # Configure to match your environment
 #
   vars:
+    variable_host: 10.0.0.4
     nuage_auth:
       api_username: csproot
       api_password: csproot
@@ -45,8 +46,8 @@
       - "Web Application AAA Instance"
 
 -  name: Create Openstack VSD-Managed Network
-   hosts: controller
+   hosts: localhost
    become: yes
    tasks:
     - name: run following commands on localhost.
-      shell: touch test1.txt
+    -script: /root/create_neutron_net.sh e48debaf-3854-4b3f-9f2a-335ddb4d70bd
