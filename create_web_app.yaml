@@ -1,5 +1,5 @@
 ---
-#- hosts: all
+- hosts: localhost
 
 #
 # Configure to match your environment
@@ -18,7 +18,6 @@
 
   tasks:
   - name: Finding Enterprise
-    hosts: localhost
     delegate_to: localhost
     nuage_vspk:
       auth: "{{ nuage_auth }}"
@@ -30,7 +29,6 @@
 
   # Creating a new Domain (if it doesn't exist yet)
   - name: Creating a few Domains from the DomainTemplate
-    hosts: localhost
     delegate_to: localhost
     nuage_vspk:
       auth: "{{ nuage_auth }}"
