@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: hosts.yaml
 
 #
 # Configure to match your environment
