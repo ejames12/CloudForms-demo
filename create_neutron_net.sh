@@ -13,5 +13,5 @@ export OS_IDENTITY_API_VERSION=3
 
 nuagenet=$1
 
-neutron net-create testnet1
-neutron subnet-create testnet1 192.168.3.0/24 --name testsubnet1 --nuagenet $nuagenet --net-partition 'Company XYZ'"
+neutron -q net-create testnet1
+neutron -q subnet-create testnet1 192.168.3.0/24 --name testsubnet1 --nuagenet $nuagenet --net-partition 'Company XYZ'"
