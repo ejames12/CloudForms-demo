@@ -42,11 +42,13 @@
         name: "{{ item }}"
         description: "Created by Ansible"
         template_id: "{{ nuage_dom_temp.id }}"
-    with_items: 
+    with_items:
       - "Web Application AAA Instance"
 
--  name: Create Openstack VSD-Managed Network
-   hosts: localhost
-   ignore_errrors: True
-   tasks:
-    - script: create_neutron_net.sh e48debaf-3854-4b3f-9f2a-335ddb4d70bd
+  -  name: Create Openstack VSD-Managed Network
+     command: neutron net-create testnet1 --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
+     ignore_errors: yes
+
+  -  name: Create Openstack VSD-Managed Subnet
+     command: neutron subnet-create testnet1 192.168.3.0/24 --name testsubnet1 --nuagenet f2c5bedc-2c08-4865-a864-5530a7b47ab3 --net-partition 'Company XYZ' --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
+     ignore_errors: yes
