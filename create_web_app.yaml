@@ -45,7 +45,7 @@
         template_id: "{{ nuage_dom_temp.id }}"
     with_items: 
       - "Web Application AAA"
-      
+
 -  name: Create Openstack VSD-Managed Network
    hosts: "{{ os_controller.ip }}"
    become: yes
