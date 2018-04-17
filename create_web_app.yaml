@@ -49,5 +49,4 @@
    hosts: localhost
    become: yes
    tasks:
-    - name: run following commands on localhost.
     - script: /root/create_neutron_net.sh e48debaf-3854-4b3f-9f2a-335ddb4d70bd
