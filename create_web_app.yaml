@@ -17,6 +17,16 @@
       id: 65dc31cb-163f-4cab-af60-0f6b8bbd14bb
 
   tasks:
+  - name: Finding Enterprise
+    delegate_to: localhost
+    nuage_vspk:
+      auth: "{{ nuage_auth }}"
+      type: Enterprise
+      command: find
+      properties:
+        name: "{{ enterprise_name }}"
+    register: nuage_enterprise
+
   # Creating a new Domain (if it doesn't exist yet)
   - name: Creating a few Domains from the DomainTemplate
     delegate_to: localhost
