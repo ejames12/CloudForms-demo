@@ -15,6 +15,8 @@
     enterprise_admin_username: ansible-admin
     nuage_dom_temp:
       id: 65dc31cb-163f-4cab-af60-0f6b8bbd14bb
+    os_controller:
+       ip: 10.0.0.4
 
   tasks:
   - name: Finding Enterprise
@@ -43,3 +45,10 @@
         template_id: "{{ nuage_dom_temp.id }}"
     with_items: 
       - "Web Application AAA"
+      
+-  name: Create Openstack VSD-Managed Network
+   hosts: "{{ os_controller.ip }}"
+   become: yes
+   tasks:
+    - name: run following commands on localhost.
+      shell: touch test1.txt
