@@ -1,5 +1,7 @@
 ---
-- hosts: localhost
+- hosts: 
+   localhost: 127.0.0.1
+   controller: 10.0.0.4
 
 #
 # Configure to match your environment
@@ -45,7 +47,7 @@
       - "Web Application AAA Instance"
 
 -  name: Create Openstack VSD-Managed Network
-   hosts: 10.0.0.4
+   hosts: controller
    become: yes
    tasks:
     - name: run following commands on localhost.
