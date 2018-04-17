@@ -48,4 +48,4 @@
 -  name: Create Openstack VSD-Managed Network
    hosts: localhost
    tasks:
-    - script: /tmp/create_neutron_net.sh e48debaf-3854-4b3f-9f2a-335ddb4d70bd
+    - script: create_neutron_net.sh e48debaf-3854-4b3f-9f2a-335ddb4d70bd
