@@ -2,4 +2,4 @@
 
 nuagenet=$1
 
-ssh -oStrictHostKeyChecking=no root@10.0.0.4 "neutron net-create testnet1 | neutron subnet-create testnet1 192.168.3.0/24 --name testsubnet1 --nuagenet $nuagenet --net-partition 'Company XYZ'"
+ssh -oStrictHostKeyChecking=no root@10.0.0.4 -i /var/lib/awx/.ssh/id_rsa "neutron net-create testnet1 | neutron subnet-create testnet1 192.168.3.0/24 --name testsubnet1 --nuagenet $nuagenet --net-partition 'Company XYZ'"
