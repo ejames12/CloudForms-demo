@@ -12,10 +12,13 @@
       api_enterprise: csp
       api_url: https://10.0.0.2:8443
       api_version: v5_0
-    enterprise_name: Company XYZ
+    enterprise_name: "Company XYZ"
     enterprise_admin_username: ansible-admin
     nuage_dom_temp:
       id: 65dc31cb-163f-4cab-af60-0f6b8bbd14bb
+    var_nuage_app_subnet: App Subnet
+    var_nuage_web_subnet: Web Subnet
+    var_nuage_db_subnet: DB Subnet
 
   tasks:
   - name: Finding Enterprise
@@ -29,7 +32,7 @@
     register: nuage_enterprise
 
   # Creating a new Domain (if it doesn't exist yet)
-  - name: Creating a few Domains from the DomainTemplate
+  - name: Creating domain instance for Application Web AAA
     delegate_to: localhost
     nuage_vspk:
       auth: "{{ nuage_auth }}"
@@ -45,10 +48,56 @@
     with_items:
       - "Web Application AAA Instance"
 
-  -  name: Create Openstack VSD-Managed Network
-     command: neutron net-create testnet1 --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
+  - name: Retrieve Nuage App Subnet UUID
+    delegate_to: localhost
+    nuage_vspk:
+      auth: "{{ nuage_auth }}"
+      type: Subnet
+      command: find
+      properties:
+        name: "{{ var_nuage_app_subnet }}"
+    register: nuage_app_subnet
+
+  - name: Retrieve Nuage DB Subnet UUID
+    delegate_to: localhost
+    nuage_vspk:
+      auth: "{{ nuage_auth }}"
+      type: Subnet
+      command: find
+      properties:
+        name: "{{ var_nuage_db_subnet }}"
+    register: nuage_db_subnet    
+
+  - name: Retrieve Nuage Web Subnet UUID
+    delegate_to: localhost
+    nuage_vspk:
+      auth: "{{ nuage_auth }}"
+      type: Subnet
+      command: find
+      properties:
+        name: "{{ var_nuage_web_subnet }}"
+    register: nuage_web_subnet
+
+  -  name: Create Openstack VSD-Managed App Network
+     command: neutron net-create App_Network --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
      ignore_errors: yes
 
-  -  name: Create Openstack VSD-Managed Subnet
-     command: neutron subnet-create testnet1 192.168.3.0/24 --name testsubnet1 --nuagenet f2c5bedc-2c08-4865-a864-5530a7b47ab3 --net-partition 'Company XYZ' --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
+  -  name: Create Openstack VSD-Managed App Subnet
+     command: neutron subnet-create App_Network 192.168.3.0/24 --name App_Subnet --nuagenet {{ nuage_app_subnet.id }} --net-partition "Company XYZ" --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
+     ignore_errors: yes
+
+  -  name: Create Openstack VSD-Managed DB Network
+     command: neutron net-create DB_Network --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
+     ignore_errors: yes
+
+  -  name: Create Openstack VSD-Managed DB Subnet
+     command: neutron subnet-create DB_Network 192.168.2.0/24 --name DB_Subnet --nuagenet {{ nuage_db_subnet.id }} --net-partition "Company XYZ" --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
+     ignore_errors: yes
+
+  -  name: Create Openstack VSD-Managed Web Network
+     command: neutron net-create Web_Network --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
+     ignore_errors: yes
+
+  -  name: Create Openstack VSD-Managed Web Subnet
+     command: neutron subnet-create Web_Network 192.168.1.0/24 --name Web_Subnet --nuagenet {{ nuage_web_subnet.id }} --net-partition "Company XYZ" --os-username admin --os-password password --os-auth-url http://10.0.0.4:5000/v3 --os-project-name admin --os-user-domain-name Default --os-project-domain-name Default
      ignore_errors: yes
